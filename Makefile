@@ -9,7 +9,7 @@ NAME = tetris
 
 FILES = main.c
 
-FLAGS = -lncurses -I include
+FLAGS = -lncurses -I include -I tools/include
 
 all:	$(NAME)
 
