@@ -13,12 +13,9 @@
 #include <tools.h>
 #include <sigthread.h>
 
-void eventloop(game_t *game)
+void my_event(void)
 {
-    while (1) {
-        usleep(1000000);
-        my_putchar('.');
-    }
+    return;
 }
 
 static void my_init(void)
@@ -42,10 +39,6 @@ static void my_init(void)
 
 void mainloop(controls_t *controls)
 {
-    while (1) {
-        my_putchar('!');
-        usleep(500);
-    }
     my_putchar(27);
     my_putchar('c');
 }
