@@ -67,6 +67,7 @@ int main(int ac, char **av)
     display_map();
     display_scoreboard();
     refresh();
+    read(0, 0, 1);
     mainloop(&controls);
     endwin();
     return (0);
