@@ -34,6 +34,11 @@ void display_scoreboard(void)
     mvaddch(8, 1 + x * 2 + 2, '\\');
     mvaddch(9 + y, 1, '\\');
     mvaddch(9 + y, 1 + x * 2 + 2, '/');
+    mvaddchstr(8, 11, (const chtype *) "Hight Score");
+    mvaddchstr(9, 11, (const chtype *) "Score");
+    mvaddchstr(11, 11, (const chtype *) "Lines");
+    mvaddchstr(12, 11, (const chtype *) "Level");
+    mvaddchstr(13, 11, (const chtype *) "Timer");
     for (int i = 1; i <= x * 2 + 1; i++) {
         mvaddch(8, 1 + i, '-');
         mvaddch(9 + y, 1 + i, '-');
