@@ -9,8 +9,19 @@
 #include <curses.h>
 #include <signal.h>
 #include <main.h>
+#include <map.h>
+#include <tools.h>
+#include <sigthread.h>
 
-static void my_init_ncurses(void)
+void eventloop(game_t *game)
+{
+    while (1) {
+        usleep(1000000);
+        my_putchar('.');
+    }
+}
+
+static void my_init(void)
 {
     keypad(stdscr, TRUE);
     initscr();
@@ -18,6 +29,7 @@ static void my_init_ncurses(void)
     cbreak();
     echo();
     start_color();
+    timeout(0);
     init_pair(1, COLOR_RED, COLOR_BLACK);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
     init_pair(3, COLOR_YELLOW, COLOR_BLACK);
@@ -25,13 +37,29 @@ static void my_init_ncurses(void)
     init_pair(5, COLOR_CYAN, COLOR_BLACK);
     init_pair(6, COLOR_MAGENTA, COLOR_BLACK);
     init_pair(7, COLOR_WHITE, COLOR_BLACK);
+    erase();
+}
+
+void mainloop(controls_t *controls)
+{
+    while (1) {
+        my_putchar('!');
+        usleep(500);
+    }
+    my_putchar(27);
+    my_putchar('c');
 }
 
 int main(int ac, char **av)
 {
     controls_t controls = {KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, 'q', ' '};
+    game_t game;
 
-    my_init_ncurses();
+    my_init();
+    display_map();
+    display_scoreboard();
+    sigthread_launch(&game, eventloop, SIGUSR1);
+    mainloop(&controls);
     endwin();
     return (0);
 }

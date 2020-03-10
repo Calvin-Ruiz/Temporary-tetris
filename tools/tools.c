@@ -10,9 +10,10 @@
 void *my_malloc(size_t size)
 {
     static char buffer[1024*64];
+    static long int pos = 0;
 
-    buffer += size;
-    return (buffer - size);
+    pos += size;
+    return (buffer + pos - size);
 }
 
 char **line_to_arr(char *str)

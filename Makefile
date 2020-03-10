@@ -7,7 +7,13 @@
 
 NAME = tetris
 
-FILES = main.c
+FILES = main.c \
+	map.c \
+	sigthread.c \
+	tools/dict.c \
+	tools/get_next_line.c \
+	tools/my_read.c \
+	tools/tools.c
 
 FLAGS = -lncurses -I include -I tools/include
 

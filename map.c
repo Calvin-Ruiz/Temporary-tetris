@@ -1,11 +1,10 @@
 /*
 ** EPITECH PROJECT, 2020
-** map
+** PSU_tetris_2019
 ** File description:
-** map
+** map.c
 */
-
-#include "../include/my.h"
+#include <curses.h>
 
 void display_map(void)
 {
@@ -26,7 +25,7 @@ void display_map(void)
     }
 }
 
-void display_scor_borad(void)
+void display_scoreboard(void)
 {
     int x = 11;
     int y = 8;
