@@ -69,6 +69,7 @@ int main(int ac, char **av)
     my_init();
     display_map();
     display_scoreboard();
+    diplsay_tetris();
     refresh();
     read(0, 0, 1);
     mainloop(&controls);

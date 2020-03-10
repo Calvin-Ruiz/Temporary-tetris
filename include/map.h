@@ -10,5 +10,6 @@
 
 void display_map(void);
 void display_scoreboard(void);
+void diplsay_tetris(void);
 
 #endif /* MAP_H_ */

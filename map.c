@@ -52,8 +52,8 @@ void display_scoreboard(void)
 void diplsay_tetris(void)
 {
     mvaddstr(0, 0, "*************");
-    mvaddstr(1, 0, " * *   * * * *");
-    mvaddstr(2, 0, " * **  * * ** ****");
-    mvaddstr(3, 0, " * *   * * **  *");
-    mvaddstr(4, 0, " * *** * * *****");
+    mvaddstr(0, 0, " * *   * * * *");
+    mvaddstr(0, 0, " * **  * * ** ****");
+    mvaddstr(0, 0, " * *   * * **  *");
+    mvaddstr(0, 0, " * *** * * *****");
 }

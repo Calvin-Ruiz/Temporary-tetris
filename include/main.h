@@ -55,7 +55,7 @@ typedef struct params {
     uchar_t help;
     uchar_t debug;
     uchar_t no_next;
-} param_t
+} param_t;
 
 typedef struct game {
     game_zone_t *game_zone;
