@@ -19,23 +19,23 @@ void *my_malloc(size_t size)
 char **line_to_arr(char *str)
 {
     int i = -1;
-    long int nargs = 2;
+    long int nargs = 3;
     char **arr;
     char **sav;
     if (str == NULL)
         return (NULL);
-    while (str[++i] != '\0')
-        nargs += str[i] == ':';
+    for (int i = -1; str[++i] != '\0';)
+        nargs += str[i] == sep;
     arr = malloc(sizeof(char *) * nargs);
     if (arr == NULL)
         return (NULL);
     sav = arr;
-    i = 0;
-    *(arr++) = (char *) (nargs - 1);
+    *(arr++) = (char *) (nargs - 2);
     while (str[i] != '\0') {
         *(arr++) = str + i;
-        while (str[i] != '\0' && str[i++] != '\n');
+        while (str[i] != '\0' && str[i++] != sep);
         str[i - (str[i] != '\0')] = '\0';
     }
+    *arr = NULL;
     return (sav + 1);
 }
