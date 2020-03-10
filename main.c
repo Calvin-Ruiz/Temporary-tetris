@@ -11,10 +11,26 @@
 #include <main.h>
 #include <map.h>
 #include <tools.h>
+#include <my_read.h>
 
 void my_event(void)
 {
     return;
+}
+
+void display_help(void)
+{
+    int fd = open("readme.txt", O_RDONLY);
+    char *str;
+    long int len = 0;
+
+    if (fd == -1)
+        exit(84);
+    str = my_read(fd, &len)
+    if (str == NULL)
+        exit(84);
+    write(1, str, len);
+    exit(0);
 }
 
 static void my_init(void)
