@@ -34,12 +34,12 @@ typedef struct game_zone {
 } game_zone_t;
 
 typedef struct controls {
-    int key_left;
-    int key_right;
-    int key_turn;
-    int key_drop;
-    int key_quit;
-    int key_pause;
+    chtype key_left;
+    chtype key_right;
+    chtype key_turn;
+    chtype key_drop;
+    chtype key_quit;
+    chtype key_pause;
 } controls_t;
 
 typedef struct data_box {
@@ -50,6 +50,12 @@ typedef struct data_box {
     uchar_t level;
     clock_t time;
 } data_box_t;
+
+typedef struct params {
+    uchar_t help;
+    uchar_t debug;
+    uchar_t no_next;
+} param_t
 
 typedef struct game {
     game_zone_t *game_zone;
