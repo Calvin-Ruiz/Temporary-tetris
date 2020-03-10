@@ -16,7 +16,7 @@ void *my_malloc(size_t size)
     return (buffer + pos - size);
 }
 
-char **line_to_arr(char *str)
+char **line_to_arr(char *str, const char sep)
 {
     int i = -1;
     long int nargs = 3;

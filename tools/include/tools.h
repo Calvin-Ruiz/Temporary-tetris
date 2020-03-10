@@ -9,7 +9,7 @@
 #define TOOLS_H_
 
 void *my_malloc(size_t size);
-char **line_to_arr(char *str);
+char **line_to_arr(char *str, const char sep);
 
 static inline void my_putchar(char c)
 {
