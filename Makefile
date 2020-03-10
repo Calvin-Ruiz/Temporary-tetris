@@ -9,7 +9,6 @@ NAME = tetris
 
 FILES = main.c \
 	map.c \
-	sigthread.c \
 	tools/dict.c \
 	tools/get_next_line.c \
 	tools/my_read.c \
@@ -17,7 +16,7 @@ FILES = main.c \
 
 FLAGS = -lncurses -I include -I tools/include
 
-all:	$(NAME)
+all :	$(NAME)
 
 $(NAME):
 	gcc -o $(NAME) $(FILES) $(FLAGS)
@@ -26,7 +25,7 @@ fast:
 	gcc -Ofast -o $(NAME) $(FILES) $(FLAGS)
 
 clean:
-	rm -f *.o
+	rm -f *.o ./*/*.o ./*/*/*.o ./*/*/*/*.o
 	rm -f *# *~ ./*/*# ./*/*~ ./*/*/*# ./*/*/*~ vgcore*
 
 fclean:	clean
@@ -46,7 +45,7 @@ push:	prepush
 	git push origin master
 
 pull:
-	git pull origin master
+	git fetch origin master && git pull origin master
 
 sync:	pull	push
 

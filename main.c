@@ -11,7 +11,6 @@
 #include <main.h>
 #include <map.h>
 #include <tools.h>
-#include <sigthread.h>
 
 void my_event(void)
 {
@@ -51,7 +50,6 @@ int main(int ac, char **av)
     my_init();
     display_map();
     display_scoreboard();
-    sigthread_launch(&game, eventloop, SIGUSR1);
     mainloop(&controls);
     endwin();
     return (0);
