@@ -12,6 +12,8 @@
 #include <map.h>
 #include <tools.h>
 #include <my_read.h>
+#include "dict.h"
+#include "option.h"
 
 void my_event(void)
 {
@@ -65,6 +67,7 @@ int main(int ac, char **av)
     controls_t controls = {KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, 'q', ' '};
     game_t game;
     param_t params = {0, 0, 0};
+    option_t *option = init_option_catcher(&controls, &params);
 
     my_init();
     display_map();

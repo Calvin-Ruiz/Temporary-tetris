@@ -9,6 +9,7 @@ NAME = tetris
 
 FILES = main.c \
 	map.c \
+	option.c \
 	tools/dict.c \
 	tools/get_next_line.c \
 	tools/my_read.c \

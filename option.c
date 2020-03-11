@@ -5,6 +5,7 @@
 ** option.c
 */
 
+#include <stddef.h>
 #include <dict.h>
 #include <option.h>
 
@@ -24,7 +25,7 @@ static void init_dict_of_option_catcher(option_t *option, controls_t *controls,
     append_to_dict(&option->single, "-t", &controls->key_turn);
     append_to_dict(&option->single, "-d", &controls->key_drop);
     append_to_dict(&option->single, "-q", &controls->key_quit);
-    append_to_dict(&option->single, "-p", &controls->key_pause;
+    append_to_dict(&option->single, "-p", &controls->key_pause);
     append_to_dict(&option->single, "-L", &option->level);
     append_to_dict(&option->bools, "--help", &params->help);
     append_to_dict(&option->bools, "--without-next", &params->no_next);
@@ -39,6 +40,22 @@ option_t *init_option_catcher(controls_t *controls, param_t *params)
 
     init_dict_of_option_catcher(&option, controls, params);
     return (&option);
+}
+
+char applpy(option_t *option, char **av)
+{
+    char **word;
+    for (uchar_t i = -1; (*av)[++i];) {
+        if ((*av)[i] != '=')
+            continue;
+        (*av)[i] = '\0';
+        word = get_from_dict(option->basics, *av);
+        if (word == NULL)
+            return (-1);
+        *word = *av + i + 1;
+        return (1);
+    }
+    return (-1);
 }
 
 char apply_option(option_t *option, char **av)
@@ -56,17 +73,7 @@ char apply_option(option_t *option, char **av)
         *word = av[1];
         return (2);
     }
-    for (uchar_t i = -1; (*av)[++i];) {
-        if ((*av)[i] != '=')
-            continue;
-        (*av)[i] = '\0';
-        word = get_from_dict(option->basics, *av);
-        if (word == NULL)
-            return (-1);
-        *word = *av + i + 1;
-        return (2);
-    }
-    return (-1);
+    return (applpy(option, av));
 }
 
 void destroy_option_catcher(option_t *option)
