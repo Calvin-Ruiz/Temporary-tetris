@@ -4,9 +4,7 @@
 ** File description:
 ** main.c
 */
-#include <stdlib.h>
-#include <unistd.h>
-#include <curses.h>
+
 #include <signal.h>
 #include <main.h>
 #include <map.h>

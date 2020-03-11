@@ -51,11 +51,11 @@ char applpy(option_t *option, char **av)
         (*av)[i] = '\0';
         word = get_from_dict(option->basics, *av);
         if (word == NULL)
-            return (-1);
+            exit(84);
         *word = *av + i + 1;
         return (1);
     }
-    return (-1);
+    exit(84);
 }
 
 char apply_option(option_t *option, char **av)
@@ -69,7 +69,7 @@ char apply_option(option_t *option, char **av)
     }
     if (word) {
         if (av[1] == NULL)
-            return (-1);
+            exit(84);
         *word = av[1];
         return (2);
     }

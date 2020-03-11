@@ -8,6 +8,10 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
+#include <stdlib.h>
+#include <unistd.h>
+#include <curses.h>
+
 typedef unsigned char uchar_t;
 typedef unsigned short ushort_t;
 typedef unsigned int uint_t;
