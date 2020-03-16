@@ -85,8 +85,6 @@ static char apply_option(option_t *option, char **av)
 
 void catch_options_and_destroy(option_t *option, char **av)
 {
-    int nbr = 0;
-
     while (*av)
         av += apply_option(option, av);
     destroy_dict(option->single, NULL);
