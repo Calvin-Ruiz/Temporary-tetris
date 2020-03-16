@@ -12,6 +12,7 @@ piece_t *clone_piece(piece_t *piece, const ushort_t x_len);
 char move_piece(piece_t *self, game_zone_t *zone, vec_t *mvt);
 char rotate_piece(piece_t *self, game_zone_t *zone);
 void fix_piece(piece_t *self, game_zone_t *zone);
+void display_piece(piece_t *self, game_zone_t *zone);
 
 static inline char my_check_pos(piece_t *self, game_zone_t *zone)
 {
