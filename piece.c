@@ -8,13 +8,13 @@
 #include <main.h>
 #include <piece.h>
 
-piece_t *clone_piece(piece_t *piece, const ushort_t x_len)
+piece_t *clone_piece(piece_t *piece, const ushort_t x)
 {
     piece_t *new = malloc(sizeof(piece_t));
 
     if (new) {
         *new = *piece;
-        new->pos.x = (x_len - new->size.x) >> 1;
+        new->pos.x = x;
     }
     return (new);
 }
@@ -62,13 +62,13 @@ void fix_piece(piece_t *self, game_zone_t *zone)
     free(self);
 }
 
-void display_piece(piece_t *self)
+void display_piece(piece_t *self, game_zone_t *zone)
 {
     uchar_t *display = self->display[self->dir];
 
     attrset(COLOR_PAIR(self->color));
     for (ushort_t y = self->pos.y; y < self->pos.y + self->size.y; y++) {
         for (ushort_t x = self->pos.x; x < self->pos.x + self->size.x; x += 2)
-            mvaddch(y, x, *(display++));
+            mvaddch(y + zone->pos.y, x + zone->pos.x, *(display++));
     }
 }
