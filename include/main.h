@@ -28,7 +28,7 @@ typedef struct piece {
     vec_t pos;
     uchar_t dir;
     uchar_t color;
-    uchar_t **display[4];
+    uchar_t *display[4];
 } piece_t;
 
 typedef struct game_zone {

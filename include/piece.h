@@ -11,19 +11,20 @@
 piece_t *clone_piece(piece_t *piece, const ushort_t x_len);
 char move_piece(piece_t *self, game_zone_t *zone, vec_t *mvt);
 char rotate_piece(piece_t *self, game_zone_t *zone);
+void fix_piece(piece_t *self, game_zone_t *zone);
 
-static inline char my_check_pos(piece_t *self, game_zone_t *zone, vec_t *pos)
+static inline char my_check_pos(piece_t *self, game_zone_t *zone)
 {
-    uchar_t *display = *(self->display[self->dir]);
+    uchar_t *display = self->display[self->dir];
     char my_if = 0;
 
-    if (pos->x >= zone->size.x - self->size.x
-        || pos->y >= zone->size.y - self->size.y)
+    if (self->pos.x >= zone->size.x - self->size.x
+        || self->pos.y >= zone->size.y - self->size.y)
         return (1);
-    for (ushort_t y = pos->y; y < pos->y + self->size.y; y++) {
-        for (ushort_t x = pos->x; x < pos->x + self->size.x; x += 2) {
-            my_if = my_if || (*display == '*' && zone->display[0][y][x] == '*');
-            display += 2;
+    for (ushort_t y = self->pos.y; y < self->pos.y + self->size.y; y++) {
+        for (ushort_t x = self->pos.x; x < self->pos.x + self->size.x; x += 2) {
+            my_if = my_if || (*(display++) == '*'
+                && zone->display[0][y][x] == '*');
         }
         if (my_if)
             return (1);
