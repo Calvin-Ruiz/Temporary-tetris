@@ -7,9 +7,11 @@
 
 #ifndef OPTION_H_
 #define OPTION_H_
+
 #include <time.h>
 #include <curses.h>
-#include "main.h"
+#include <main.h>
+
 typedef struct option_catcher {
     dict_t *single;
     dict_t *basics;
@@ -19,5 +21,7 @@ typedef struct option_catcher {
 } option_t;
 
 option_t *init_option_catcher(controls_t *controls, param_t *params);
+char apply_option(option_t *option, char **av);
+void destroy_option_catcher(option_t *option);
 
 #endif /* OPTION_H_ */

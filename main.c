@@ -52,6 +52,9 @@ static void my_init(void)
         init_pair(7, COLOR_WHITE, COLOR_BLACK);
     }
     erase();
+    display_map();
+    display_scoreboard();
+    diplsay_tetris();
 }
 
 void mainloop(controls_t *controls)
@@ -68,9 +71,6 @@ int main(int ac, char **av)
     option_t *option = init_option_catcher(&controls, &params);
 
     my_init();
-    display_map();
-    display_scoreboard();
-    diplsay_tetris();
     refresh();
     read(0, 0, 1);
     mainloop(&controls);

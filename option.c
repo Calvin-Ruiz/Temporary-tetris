@@ -42,9 +42,10 @@ option_t *init_option_catcher(controls_t *controls, param_t *params)
     return (&option);
 }
 
-char applpy(option_t *option, char **av)
+static char apply_word_option(option_t *option, char **av)
 {
     char **word;
+
     for (uchar_t i = -1; (*av)[++i];) {
         if ((*av)[i] != '=')
             continue;
@@ -53,7 +54,7 @@ char applpy(option_t *option, char **av)
         if (word == NULL)
             exit(84);
         *word = *av + i + 1;
-        return (1);
+        return;
     }
     exit(84);
 }
@@ -73,7 +74,7 @@ char apply_option(option_t *option, char **av)
         *word = av[1];
         return (2);
     }
-    return (applpy(option, av));
+    return (apply_word_option(option, av));
 }
 
 void destroy_option_catcher(option_t *option)
