@@ -26,7 +26,8 @@ char move_piece(piece_t *self, game_zone_t *zone, vec_t *mvt)
 
     mvt->x += self->pos.x;
     mvt->y += self->pos.y;
-    if (mvt->x >= zone->size.x - self->size.x)
+    if (mvt->x >= zone->size.x - self->size.x
+        || mvt->y >= zone->size.y - self->size.y)
         return (0);
     for (ushort_t y = mvt->y; y < mvt->y + self->size.y; y++) {
         for (ushort_t x = mvt->x; x < mvt->x + self->size.x; x += 2) {
