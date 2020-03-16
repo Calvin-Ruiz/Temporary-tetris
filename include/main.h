@@ -16,6 +16,7 @@ typedef unsigned char uchar_t;
 typedef unsigned short ushort_t;
 typedef unsigned int uint_t;
 typedef unsigned long int ulong_t;
+typedef uint_t rawvec_t;
 
 typedef struct vector {
     ushort_t x;
@@ -27,14 +28,13 @@ typedef struct piece {
     vec_t pos;
     uchar_t dir;
     uchar_t color;
-    uchar_t *display[4];
+    uchar_t **display[4];
 } piece_t;
 
 typedef struct game_zone {
     vec_t pos;
     vec_t size;
-    uchar_t *display[8];
-    uchar_t **arr[8];
+    uchar_t **display[8];
 } game_zone_t;
 
 typedef struct controls {
