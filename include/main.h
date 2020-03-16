@@ -63,6 +63,7 @@ typedef struct params {
 
 typedef struct game {
     game_zone_t *game_zone;
+    data_box_t *data_box;
     vec_t preview_pos;
     piece_t *preview;
     piece_t *actual;

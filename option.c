@@ -8,6 +8,7 @@
 #include <stddef.h>
 #include <dict.h>
 #include <option.h>
+#include <my_getnbr.h>
 
 static void init_dict_of_option_catcher(option_t *option, controls_t *controls,
     param_t *params)
@@ -51,15 +52,18 @@ static char apply_word_option(option_t *option, char **av)
             continue;
         (*av)[i] = '\0';
         word = get_from_dict(option->basics, *av);
-        if (word == NULL)
+        if (word == NULL) {
+            endwin();
             exit(84);
+        }
         *word = *av + i + 1;
-        return;
+        return (1);
     }
+    endwin();
     exit(84);
 }
 
-char apply_option(option_t *option, char **av)
+static char apply_option(option_t *option, char **av)
 {
     char *my_bool = get_from_dict(option->bools, *av);
     char **word = get_from_dict(option->single, *av);
@@ -69,16 +73,22 @@ char apply_option(option_t *option, char **av)
         return (1);
     }
     if (word) {
-        if (av[1] == NULL)
+        if (av[1] == NULL) {
+            endwin();
             exit(84);
+        }
         *word = av[1];
         return (2);
     }
     return (apply_word_option(option, av));
 }
 
-void destroy_option_catcher(option_t *option)
+void catch_options_and_destroy(option_t *option, char **av)
 {
+    int nbr = 0;
+
+    while (*av)
+        av += apply_option(option, av);
     destroy_dict(option->single, NULL);
     destroy_dict(option->basics, NULL);
     destroy_dict(option->bools, NULL);

@@ -24,12 +24,17 @@ void display_help(void)
     char *str;
     long int len = 0;
 
-    if (fd == -1)
+    if (fd == -1) {
+        endwin();
         exit(84);
+    }
     str = my_read(fd, &len);
-    if (str == NULL)
+    if (str == NULL) {
+        endwin();
         exit(84);
+    }
     write(1, str, len);
+    endwin();
     exit(0);
 }
 
@@ -66,11 +71,12 @@ void mainloop(controls_t *controls)
 int main(int ac, char **av)
 {
     controls_t controls = {KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, 'q', ' '};
-    game_t game;
+    game_t *game = NULL;
     param_t params = {0, 0, 0};
     option_t *option = init_option_catcher(&controls, &params);
 
     my_init();
+    catch_options_and_destroy(option, av + 1);
     refresh();
     read(0, 0, 1);
     mainloop(&controls);

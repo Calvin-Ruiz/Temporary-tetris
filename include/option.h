@@ -21,7 +21,6 @@ typedef struct option_catcher {
 } option_t;
 
 option_t *init_option_catcher(controls_t *controls, param_t *params);
-char apply_option(option_t *option, char **av);
-void destroy_option_catcher(option_t *option);
+void catch_options_and_destroy(option_t *option, char **av);
 
 #endif /* OPTION_H_ */
