@@ -61,3 +61,14 @@ void fix_piece(piece_t *self, game_zone_t *zone)
     }
     free(self);
 }
+
+void display_piece(piece_t *self)
+{
+    uchar_t *display = self->display[self->dir];
+
+    attrset(COLOR_PAIR(self->color));
+    for (ushort_t y = self->pos.y; y < self->pos.y + self->size.y; y++) {
+        for (ushort_t x = self->pos.x; x < self->pos.x + self->size.x; x += 2)
+            mvaddch(y, x, *(display++));
+    }
+}
