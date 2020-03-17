@@ -11,6 +11,7 @@
 #include <time.h>
 #include <curses.h>
 #include <main.h>
+#include <data_box.h>
 
 typedef struct option_catcher {
     dict_t *single;
@@ -21,6 +22,6 @@ typedef struct option_catcher {
 } option_t;
 
 option_t *init_option_catcher(controls_t *controls, param_t *params);
-void catch_options_and_destroy(option_t *option, char **av);
+void catch_options_and_destroy(option_t *option, char **av, data_box_t *datas);
 
 #endif /* OPTION_H_ */

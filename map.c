@@ -5,23 +5,22 @@
 ** map.c
 */
 #include <curses.h>
+#include <main.h>
 
-void display_map(void)
+void display_map(vec_t *size)
 {
-    int x = 10;
-    int y = 20;
-
+    attrset(COLOR_PAIR(0));
     mvaddch(0, 33, '+');
-    mvaddch(0, 33 + x * 2 + 2, '+');
-    mvaddch(1 + y, 33, '+');
-    mvaddch(1 + y, 33 + x * 2 + 2, '+');
-    for (int i = 1; i <= x * 2 + 1; i++) {
+    mvaddch(0, 33 + size->x * 2 + 2, '+');
+    mvaddch(1 + size->y, 33, '+');
+    mvaddch(1 + size->y, 33 + size->x * 2 + 2, '+');
+    for (int i = 1; i <= size->x * 2 + 1; i++) {
         mvaddch(0, 33 + i, '-');
-        mvaddch(1 + y, 33 + i, '-');
+        mvaddch(1 + size->y, 33 + i, '-');
     }
-    for (int i = 1; i < y + 1; i++) {
+    for (int i = 1; i < size->y + 1; i++) {
         mvaddch(0 + i, 33, '|');
-        mvaddch(0 + i, 33 + x * 2 + 2, '|');
+        mvaddch(0 + i, 33 + size->x * 2 + 2, '|');
     }
 }
 

@@ -83,10 +83,17 @@ static char apply_option(option_t *option, char **av)
     return (apply_word_option(option, av));
 }
 
-void catch_options_and_destroy(option_t *option, char **av)
+void catch_options_and_destroy(option_t *option, char **av, data_box_t *datas)
 {
+    int nb = 0;
+
     while (*av)
         av += apply_option(option, av);
+    if (option->level) {
+        nb = my_getnbr(option->level);
+        if (nb > 0)
+            datas->level = nb;
+    }
     destroy_dict(option->single, NULL);
     destroy_dict(option->basics, NULL);
     destroy_dict(option->bools, NULL);

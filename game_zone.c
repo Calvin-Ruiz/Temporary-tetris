@@ -8,11 +8,41 @@
 #include <main.h>
 #include <piece.h>
 #include <game_zone.h>
+#include <map.h>
+
+game_zone_t *create_game_zone(void)
+{
+    static game_zone_t zone = {(vec_t) {35, 1}, (vec_t) {10, 20}, {0, 0, 0, 0}};
+
+    return (&zone);
+}
+
+void init_game_zone(game_zone_t *zone)
+{
+    vec_t size = {34, 17};
+
+    size.x += 3 + 2 * zone->size.x;
+    if (zone->size.y + 2 > size.y)
+        size.y = zone->size.y + 2;
+    while (LINES < size.y || COLS < size.x)
+        my_message(&size);
+    erase();
+    for (int i = -1; ++i < 8;) {
+        zone->display[i] = my_malloc(sizeof(void *) * zone->size.y);
+        for (int j = -1; ++j < zone->size.y;) {
+            zone->display[i][j] = malloc(zone->size.x * 2);
+        }
+    }
+    display_map(&zone->size);
+    display_scoreboard();
+    diplsay_tetris();
+}
 
 void draw_game_zone(game_zone_t *self)
 {
     for (uchar_t i = 0; ++i < 8;)
         sub_draw_game_zone(self, (char **) self->display[i]);
+    refresh();
 }
 
 void remove_line(game_zone_t *self, ushort_t y)

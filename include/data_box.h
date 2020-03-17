@@ -17,4 +17,11 @@ typedef struct data_box {
     clock_t time;
 } data_box_t;
 
+static inline data_box_t *create_data_box(void)
+{
+    static data_box_t data;
+
+    return (&data);
+}
+
 #endif /* DATA_BOX_H_ */

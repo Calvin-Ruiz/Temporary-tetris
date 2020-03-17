@@ -20,7 +20,14 @@ typedef struct game {
     piece_t *actual;
     piece_t **pieces;
     uchar_t nb_pieces;
-    char is_running;
+    clock_t delta_time;
+    clock_t last;
+    uchar_t is_running;
+    uchar_t display_next;
 } game_t;
+
+void update_game(game_t *self);
+void init_game(game_t *self, param_t *params);
+game_t *create_game(controls_t *controls);
 
 #endif /* GAME_H_ */

@@ -11,6 +11,7 @@
 #include <my_read.h>
 #include <dict.h>
 #include <option.h>
+#include <time.h>
 
 void my_event(game_t *game)
 {
@@ -70,9 +71,6 @@ static void my_init(void)
         init_pair(7, COLOR_WHITE, COLOR_BLACK);
     }
     erase();
-    display_map();
-    display_scoreboard();
-    diplsay_tetris();
 }
 
 void mainloop(game_t *game)
@@ -80,6 +78,10 @@ void mainloop(game_t *game)
     refresh();
     read(0, 0, 1);
     while (game->is_running) {
+        if (game->last < clock()) {
+            game->last += game->delta_time;
+            update_game(game);
+        }
         my_event(game);
     }
 }
@@ -87,12 +89,17 @@ void mainloop(game_t *game)
 int main(int ac, char **av)
 {
     controls_t controls = {KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, 'q', ' '};
-    game_t *game = NULL;
     param_t params = {0, 0, 0};
+    game_t *game = create_game(&controls);
     option_t *option = init_option_catcher(&controls, &params);
 
     my_init();
-    catch_options_and_destroy(option, av + 1);
+    catch_options_and_destroy(option, av + 1, game->data_box);
+    if (params.help)
+        ;
+    if (params.debug)
+        ;
+    init_game_zone(game->game_zone);
     mainloop(game);
     endwin();
     return (0);

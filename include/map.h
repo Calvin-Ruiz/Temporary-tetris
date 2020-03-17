@@ -8,7 +8,7 @@
 #ifndef MAP_H_
 #define MAP_H_
 
-void display_map(void);
+void display_map(vec_t *size);
 void display_scoreboard(void);
 void diplsay_tetris(void);
 

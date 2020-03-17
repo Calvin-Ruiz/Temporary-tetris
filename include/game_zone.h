@@ -14,6 +14,8 @@ typedef struct game_zone {
     uchar_t **display[8];
 } game_zone_t;
 
+game_zone_t *create_game_zone(void);
+void init_game_zone(game_zone_t *zone);
 void draw_game_zone(game_zone_t *self);
 void remove_line(game_zone_t *self, ushort_t y);
 uchar_t get_lines_filled(game_zone_t *self);
@@ -44,6 +46,44 @@ static inline void remove_line_in_layer(uchar_t **layer, ushort_t y, ushort_t x)
     while (--x > 0)
         line[x] = ' ';
     *layer = line;
+}
+
+static inline void my_cute_message(void)
+{
+    if (COLS >= 10) {
+        mvaddstr(LINES >> 1, (COLS - 10) >> 1, "more space");
+        return;
+    }
+    if (COLS >= 6)
+        mvaddstr(LINES >> 1, (COLS - 6) >> 1, "please");
+    else if (COLS >= 4)
+        mvaddstr(LINES >> 1, (COLS - 4) >> 1, "no !");
+    else
+        mvaddch(LINES >> 1, COLS >> 1, 'X');
+}
+
+static inline void my_message(vec_t *size)
+{
+    char str[] = "We need :     \n00 more lines \n00 more column";
+    int pos[3] = {(LINES - 3) >> 1, (COLS - 14) >> 1, -1};
+
+    erase();
+    if (COLS < 14 || LINES < 3) {
+        my_cute_message();
+        refresh();
+        return;
+    }
+    if (LINES < size->y) {
+        str[15] = '0' + (size->y - LINES) / 10;
+        str[16] = '0' + (size->y - LINES) % 10;
+    }
+    if (COLS < size->x) {
+        str[30] = '0' + (size->x - COLS) / 10;
+        str[31] = '0' + (size->x - COLS) % 10;
+    }
+    while (++pos[2] < 3)
+        mvaddnstr(pos[0]++, pos[1], str + pos[2] * 15, 14);
+    refresh();
 }
 
 #endif /* GAME_ZONE_H_ */
