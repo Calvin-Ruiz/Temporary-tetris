@@ -22,6 +22,6 @@ piece_t **load_piece_array(char is_debug)
     if (is_debug)
         debug_display((loader_t *) loader);
     pieces = build_piece_array((loader_t *) loader);
-    destroy_dict(loader);
+    destroy_dict(loader, NULL);
     return (pieces);
 }
