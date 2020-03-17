@@ -7,8 +7,9 @@
 
 #include <piece.h>
 #include <loader.h>
+#include <dirent.h>
 
-piece_t **load_piece_array(char is_debug)
+piece_t **load_piece_array(char is_debug, uchar_t *nb_valid_pieces)
 {
     dict_t *loader = NULL;
     DIR *dir = opendir("tetriminos");
@@ -21,7 +22,7 @@ piece_t **load_piece_array(char is_debug)
     }
     if (is_debug)
         debug_display((loader_t *) loader);
-    pieces = build_piece_array((loader_t *) loader);
+    pieces = build_piece_array((loader_t *) loader, nb_valid_pieces);
     destroy_dict(loader, NULL);
     return (pieces);
 }

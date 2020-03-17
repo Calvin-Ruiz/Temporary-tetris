@@ -12,9 +12,23 @@
 #include <dict.h>
 #include <option.h>
 
-void my_event(void)
+void my_event(game_t *game)
 {
-    return;
+    controls_t *cont = game->controls;
+    chtype c = getch();
+
+    if (c == cont->key_left)
+        move_piece(game->actual, game->game_zone, &((vec_t) {-1, 0}));
+    if (c == cont->key_right)
+        move_piece(game->actual, game->game_zone, &((vec_t) {1, 0}));
+    if (c == cont->key_drop)
+        my_puterr("Not implemented yet\n");
+    if (c == cont->key_turn)
+        rotate_piece(game->actual, game->game_zone);
+    if (c == cont->key_pause)
+        my_puterr("Not implemented yet\n");
+    if (c == cont->key_quit)
+        game->is_running = 0;
 }
 
 void display_help(void)
@@ -61,10 +75,13 @@ static void my_init(void)
     diplsay_tetris();
 }
 
-void mainloop(controls_t *controls)
+void mainloop(game_t *game)
 {
-    my_putchar(27);
-    my_putchar('c');
+    refresh();
+    read(0, 0, 1);
+    while (game->is_running) {
+        my_event(game);
+    }
 }
 
 int main(int ac, char **av)
@@ -76,9 +93,7 @@ int main(int ac, char **av)
 
     my_init();
     catch_options_and_destroy(option, av + 1);
-    refresh();
-    read(0, 0, 1);
-    mainloop(&controls);
+    mainloop(game);
     endwin();
     return (0);
 }

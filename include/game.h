@@ -14,12 +14,13 @@
 typedef struct game {
     game_zone_t *game_zone;
     data_box_t *data_box;
+    controls_t *controls;
     vec_t preview_pos;
     piece_t *preview;
     piece_t *actual;
-    piece_t *pieces;
+    piece_t **pieces;
     uchar_t nb_pieces;
-    controls_t controls;
+    char is_running;
 } game_t;
 
 #endif /* GAME_H_ */
