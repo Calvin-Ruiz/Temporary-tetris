@@ -32,7 +32,7 @@ static inline void remove_line_in_layer(uchar_t **layer, ushort_t y, ushort_t x)
     while (y-- > 0)
         layer[y + 1] = layer[y];
     while (--x > 0)
-
+        line[x] = ' ';
     *layer = line;
 }
 
