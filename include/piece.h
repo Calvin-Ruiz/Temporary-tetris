@@ -8,6 +8,17 @@
 #ifndef PIECE_H_
 #define PIECE_H_
 
+#include <main.h>
+#include <game_zone.h>
+
+typedef struct piece {
+    vec_t size;
+    vec_t pos;
+    uchar_t dir;
+    uchar_t color;
+    uchar_t *display[4];
+} piece_t;
+
 piece_t *clone_piece(piece_t *piece, const ushort_t x_len);
 char move_piece(piece_t *self, game_zone_t *zone, vec_t *mvt);
 char rotate_piece(piece_t *self, game_zone_t *zone);

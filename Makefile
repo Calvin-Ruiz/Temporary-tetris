@@ -7,7 +7,9 @@
 
 NAME = tetris
 
-FILES = game_zone.c \
+FILES = game.c \
+	game_zone.c \
+	loads.c \
 	main.c \
 	map.c \
 	option.c \

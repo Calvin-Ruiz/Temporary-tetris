@@ -8,6 +8,16 @@
 #ifndef GAME_ZONE_H_
 #define GAME_ZONE_H_
 
+typedef struct game_zone {
+    vec_t pos;
+    vec_t size;
+    uchar_t **display[8];
+} game_zone_t;
+
+void draw_game_zone(game_zone_t *self);
+void remove_line(game_zone_t *self, ushort_t y);
+uchar_t get_lines_filled(game_zone_t *self);
+
 static inline void sub_draw_game_zone(const game_zone_t * const self,
     char **display)
 {

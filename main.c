@@ -5,13 +5,12 @@
 ** main.c
 */
 
+#include <game.h>
 #include <signal.h>
-#include <main.h>
 #include <map.h>
-#include <tools.h>
 #include <my_read.h>
-#include "dict.h"
-#include "option.h"
+#include <dict.h>
+#include <option.h>
 
 void my_event(void)
 {

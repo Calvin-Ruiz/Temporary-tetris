@@ -1,12 +1,13 @@
 /*
 ** EPITECH PROJECT, 2020
-** load
+** PSU_tetris_2019
 ** File description:
-** load
+** loads.c
 */
 
+#include <piece.h>
 
-int getShape(int fd, piece *piece)
+int getShape(int fd, piece_t *piece)
 {
     int i;
     char *str;
@@ -26,7 +27,7 @@ int getShape(int fd, piece *piece)
     return (setColor(tetri), 0);
 }
 
-int getInfos(int fd, piece *piece, int width, int height)
+int getInfos(int fd, piece_t *piece, int width, int height)
 {
     char *str;
     char **infos;
@@ -42,7 +43,7 @@ int getInfos(int fd, piece *piece, int width, int height)
     return (getShape(fd, piece));
 }
 
-int getTetrimino(char *name, piece *piece, t_game *game)
+int getTetrimino(char *name, piece_t *piece, game_t *game)
 {
     int fd;
 
