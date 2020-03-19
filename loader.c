@@ -12,6 +12,17 @@
 #include <my_getnbr.h>
 #include <get_next_line.h>
 
+void debug_display(loader_t *loader)
+{
+    return;
+}
+
+piece_t **build_piece_array(loader_t *loader, uchar_t *nb_valid_pieces)
+{
+    *nb_valid_pieces = 0;
+    return (NULL);
+}
+
 piece_t *parser_tetrimino(int fd, piece_t *piece)
 {
     char *line = get_next_line(fd);
@@ -19,7 +30,7 @@ piece_t *parser_tetrimino(int fd, piece_t *piece)
 
     if (line == NULL)
         return (NULL);
-    tab = line_to_arr(line, " ");
+    tab = line_to_arr(line, ' ');
     if ((long) tab[-1] != 3)
         return (NULL);
     piece->size.x = my_getnbr(tab[0]);

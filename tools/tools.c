@@ -44,6 +44,6 @@ char **line_to_arr(char *str, const char sep)
 void my_putnbr(int nb)
 {
     if (nb > 9)
-        my_putnbr(nb);
-    my_putchar('0' + nb);
+        my_putnbr(nb / 10);
+    my_putchar('0' + nb % 10);
 }
