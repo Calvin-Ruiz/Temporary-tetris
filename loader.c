@@ -13,13 +13,13 @@ piece_t *parser_tetrimino(int fd, piece_t *piece)
 {
     char *line = get_next_line(fd);
     char **tab;
-
     if (line == NULL)
         return (NULL);
-    piece->size.x;
-    if () {
-        piece->size.y;
-        piece->color;
+        tab = line_to_arr(line, " ");
+    piece->size.x = my_gernbr(tab[0]);
+    if (tab[1] && tab[2]) {
+        piece->size.y = my_gernbr(tab[1]);
+        piece->color = my_gernbr(tab[2]);
     } else
         return (NULL);
     return (piece);
