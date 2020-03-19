@@ -6,6 +6,7 @@
 */
 #include <stdlib.h>
 #include <unistd.h>
+#include <tools.h>
 
 void *my_malloc(size_t size)
 {
@@ -38,4 +39,11 @@ char **line_to_arr(char *str, const char sep)
     }
     *arr = NULL;
     return (sav + 1);
+}
+
+void my_putnbr(int nb)
+{
+    if (nb > 9)
+        my_putnbr(nb);
+    my_putchar('0' + nb);
 }

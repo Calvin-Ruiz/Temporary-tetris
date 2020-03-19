@@ -7,8 +7,10 @@
 
 NAME = tetris
 
-FILES = game.c \
+FILES = debug.c \
+	game.c \
 	game_zone.c \
+	loader.c \
 	main.c \
 	map.c \
 	option.c \

@@ -10,6 +10,7 @@
 
 void *my_malloc(size_t size);
 char **line_to_arr(char *str, const char sep);
+void my_putnbr(int nb);
 
 static inline void my_putchar(char c)
 {

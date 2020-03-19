@@ -12,6 +12,7 @@
 #include <dict.h>
 #include <option.h>
 #include <time.h>
+#include <debug.h>
 
 void my_event(game_t *game)
 {
@@ -96,7 +97,12 @@ int main(int ac, char **av)
     my_init();
     catch_options_and_destroy(option, av + 1, game->data_box);
     if (params.help);
-    if (params.debug);
+    if (params.debug)
+        my_debug(&controls, params.no_next, game->data_box->level,
+            &game->game_zone->size);
+    //load_piece_array(params.debug, &game->nb_pieces);
+    if (params.debug)
+        read(0, *av, 1);
     init_game_zone(game->game_zone);
     mainloop(game);
     endwin();
