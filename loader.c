@@ -13,6 +13,7 @@ piece_t *parser_tetrimino(int fd, piece_t *piece)
 {
     char *line = get_next_line(fd);
     char **tab;
+
     if (line == NULL)
         return (NULL);
     piece->size.x;
@@ -49,6 +50,7 @@ piece_t **load_piece_array(char is_debug, uchar_t *nb_valid_pieces)
         append_piece_from_file(my_dirent->d_name, &loader);
         my_dirent = readdir(dir);
     }
+    closedir(dir);
     if (is_debug)
         debug_display((loader_t *) loader);
     pieces = build_piece_array((loader_t *) loader, nb_valid_pieces);

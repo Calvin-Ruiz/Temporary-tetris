@@ -95,10 +95,8 @@ int main(int ac, char **av)
 
     my_init();
     catch_options_and_destroy(option, av + 1, game->data_box);
-    if (params.help)
-        ;
-    if (params.debug)
-        ;
+    if (params.help);
+    if (params.debug);
     init_game_zone(game->game_zone);
     mainloop(game);
     endwin();
