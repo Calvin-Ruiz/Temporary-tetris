@@ -23,9 +23,8 @@ piece_t **build_piece_array(loader_t *loader, uchar_t *nb_valid_pieces)
     return (NULL);
 }
 
-piece_t *parser_tetrimino(int fd, piece_t *piece)
+static piece_t *parser_tetrimino(int fd, piece_t *piece, char *line)
 {
-    char *line = get_next_line(fd);
     char **tab;
 
     if (line == NULL)
@@ -46,12 +45,20 @@ void append_piece_from_file(char *filename, dict_t **loader)
 {
     piece_t *piece = malloc(sizeof(piece_t));
     int fd = open(filename, O_RDONLY);
+    long len = 0;
+    char *str = my_read(fd, &len);
+    char **arr;
 
-    if (piece == NULL || fd == -1)
+    if (piece == NULL || str == NULL) {
+        append_to_dict(loader, filename, NULL);
         return;
-    piece = parser_tetrimino(fd, piece);
-    if (piece == NULL)
+    }
+    arr = line_to_arr(str, '\n');
+    piece = parser_tetrimino(fd, piece, str);
+    if (piece == NULL || arr == NULL) {
+        append_to_dict(loader, filename, NULL);
         return;
+    }
     close(fd);
     append_to_dict(loader, filename, piece);
 }
