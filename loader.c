@@ -10,7 +10,7 @@
 #include <dirent.h>
 #include <fcntl.h>
 #include <my_getnbr.h>
-#include <get_next_line.h>
+#include <my_read.h>
 
 void debug_display(loader_t *loader)
 {
@@ -19,8 +19,11 @@ void debug_display(loader_t *loader)
 
 piece_t **build_piece_array(loader_t *loader, uchar_t *nb_valid_pieces)
 {
+    piece_t **pieces = my_malloc(0);
+
     *nb_valid_pieces = 0;
-    return (NULL);
+    my_malloc(sizeof(void *) * (*nb_valid_pieces));
+    return (pieces);
 }
 
 static piece_t *parser_tetrimino(int fd, piece_t *piece, char *line)
