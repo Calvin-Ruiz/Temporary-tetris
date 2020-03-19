@@ -19,7 +19,9 @@ piece_t *parser_tetrimino(int fd, piece_t *piece)
 
     if (line == NULL)
         return (NULL);
-    tab = line_to_arr(line, ' ');
+    tab = line_to_arr(line, " ");
+    if ((long) tab[-1] != 3)
+        return (NULL);
     piece->size.x = my_getnbr(tab[0]);
     if (tab[1] && tab[2]) {
         piece->size.y = my_getnbr(tab[1]);
