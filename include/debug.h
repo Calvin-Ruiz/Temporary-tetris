@@ -25,7 +25,7 @@ static inline void specific_key_printer(chtype c)
             write(1, str, 4);
             break;
         default:
-            write(1, "(unreferenced)", 10);
+            write(1, "(unreferenced)", 14);
     }
 }
 
