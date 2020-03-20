@@ -25,12 +25,12 @@ typedef struct vector {
 } vec_t;
 
 typedef struct controls {
-    chtype key_left;
-    chtype key_right;
-    chtype key_turn;
-    chtype key_drop;
-    chtype key_quit;
-    chtype key_pause;
+    long key_left;
+    long key_right;
+    long key_turn;
+    long key_drop;
+    long key_quit;
+    long key_pause;
 } controls_t;
 
 typedef struct params {

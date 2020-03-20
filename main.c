@@ -87,6 +87,22 @@ void mainloop(game_t *game)
     }
 }
 
+void fixing(controls_t *controls)
+{
+    if (controls->key_left >= 16777216)
+        controls->key_left = *((uchar_t *) controls->key_left);
+    if (controls->key_right >= 16777216)
+        controls->key_right = *((uchar_t *) controls->key_right);
+    if (controls->key_drop >= 16777216)
+        controls->key_drop = *((uchar_t *) controls->key_drop);
+    if (controls->key_turn >= 16777216)
+        controls->key_turn = *((uchar_t *) controls->key_turn);
+    if (controls->key_quit >= 16777216)
+        controls->key_quit = *((uchar_t *) controls->key_quit);
+    if (controls->key_pause >= 16777216)
+        controls->key_pause = *((uchar_t *) controls->key_pause);
+}
+
 int main(int ac, char **av)
 {
     controls_t controls = {KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, 'q', ' '};
@@ -96,6 +112,7 @@ int main(int ac, char **av)
 
     my_init();
     catch_options_and_destroy(option, av + 1, game->data_box);
+    fixing(&controls);
     if (params.help);
     if (params.debug)
         my_debug(&controls, params.no_next, game->data_box->level,
