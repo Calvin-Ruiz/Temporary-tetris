@@ -53,7 +53,7 @@ void draw_game_zone(game_zone_t *self, void *actual)
 
 void remove_line(game_zone_t *self, ushort_t y)
 {
-    for (uchar_t i = 0; ++i < 8;)
+    for (uchar_t i = -1; ++i < 8;)
         remove_line_in_layer(self->display[i], y, self->size.x);
 }
 
@@ -61,7 +61,7 @@ uchar_t get_lines_filled(game_zone_t *self)
 {
     uchar_t nb_lines;
 
-    for (ushort_t y = -1; ++y < self->pos.y + self->size.y;) {
+    for (ushort_t y = -1; ++y < self->size.y;) {
         if (is_line_full((*self->display)[y], self->size.x)) {
             remove_line(self, y);
             nb_lines++;
