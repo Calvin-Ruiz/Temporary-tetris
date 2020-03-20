@@ -29,11 +29,13 @@ void update_game(game_t *self)
     if (move_piece(self->actual, self->game_zone, &movement)) {
         fix_piece(self->actual, self->game_zone);
         self->actual = self->preview;
+        self->is_running = !my_check_pos(self->actual, self->game_zone);
         self->preview = clone_piece(self->pieces[clock() % self->nb_pieces],
             self->game_zone->size.x >> 1);
         self->data_box->nb_lines += get_lines_filled(self->game_zone);
-        self->data_box->level = self->data_box->nb_lines / 10;
+        self->data_box->level = self->data_box->nb_lines / 10 + 1;
         self->delta_time = CLOCKS_PER_SEC / self->data_box->level;
     }
-    draw_game_zone(self->game_zone);
+    draw_game_zone(self->game_zone, self->actual);
+    refresh();
 }

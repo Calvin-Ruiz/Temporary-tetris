@@ -16,7 +16,13 @@ typedef struct loader {
     struct loader *next;
 } loader_t;
 
-char *create_rotated_piece(char *piece_array, vec_t *size);
+static inline void fast_strncpy(uchar_t *dest, char *src, short n)
+{
+    while (n-- > 0 && *src)
+        *(dest++) = *(src++);
+}
+
+uchar_t *create_rotated_piece(uchar_t *piece_array, vec_t *size);
 void append_piece_from_file(char *filename, dict_t **loader);
 piece_t **build_piece_array(loader_t *loader, uchar_t *nb_valid_pieces);
 void debug_display(loader_t *loader);

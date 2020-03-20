@@ -16,21 +16,25 @@ typedef struct game_zone {
 
 game_zone_t *create_game_zone(void);
 void init_game_zone(game_zone_t *zone);
-void draw_game_zone(game_zone_t *self);
+void draw_game_zone(game_zone_t *self, void *actual);
 void remove_line(game_zone_t *self, ushort_t y);
 uchar_t get_lines_filled(game_zone_t *self);
 
 static inline void sub_draw_game_zone(const game_zone_t * const self,
-    char **display)
+    char *display, ushort_t y, char prefill)
 {
-    for (ushort_t y = self->pos.y; y < self->pos.y + self->size.y;) {
-        mvaddstr(y++, self->pos.x, *(display++));
+    for (ushort_t x = self->pos.x; x < self->pos.x + self->size.x * 2;
+        x += 2) {
+        if (*(display++) == '*')
+            mvaddch(y + self->pos.y, x, '*');
+        if (prefill)
+            mvaddch(y + self->pos.y, x, ' ');
     }
 }
 
 static inline uchar_t is_line_full(uchar_t *str, const ushort_t x_max)
 {
-    for (ushort_t x = 0; x < x_max; x += 2) {
+    for (ushort_t x = 0; x < x_max * 2; x += 2) {
         if (str[x] != '*')
             return (0);
     }

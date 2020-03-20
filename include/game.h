@@ -27,7 +27,6 @@ typedef struct game {
 } game_t;
 
 void update_game(game_t *self);
-void init_game(game_t *self, param_t *params);
 game_t *create_game(controls_t *controls);
 
 #endif /* GAME_H_ */

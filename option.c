@@ -91,8 +91,10 @@ void catch_options_and_destroy(option_t *option, char **av, data_box_t *datas)
         av += apply_option(option, av);
     if (option->level) {
         nb = my_getnbr(option->level);
-        if (nb > 0)
+        if (nb > 0) {
             datas->level = nb;
+            datas->nb_lines = nb * 10 - 10;
+        }
     }
     destroy_dict(option->single, NULL);
     destroy_dict(option->basics, NULL);

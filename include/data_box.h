@@ -21,6 +21,7 @@ static inline data_box_t *create_data_box(void)
 {
     static data_box_t data;
 
+    data = (data_box_t) {(vec_t) {10, 10}, 0, 0, 0, 1, 0};
     return (&data);
 }
 

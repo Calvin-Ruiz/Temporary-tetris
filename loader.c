@@ -17,36 +17,45 @@ void debug_display(loader_t *loader)
     return;
 }
 
-piece_t **build_piece_array(loader_t *loader, uchar_t *nb_valid_pieces)
+static piece_t *builder_tetrimino(piece_t *piece, char **arr, long len)
 {
-    piece_t **pieces = my_malloc(0);
-
-    *nb_valid_pieces = 0;
-    while (loader) {
-        if (loader->piece) {
-            pieces[(*nb_valid_pieces)++] = loader->piece;
-        }
-        loader = loader->next;
+    char *end = arr[0] + len;
+    char *beg = arr[1] - 1;
+    uchar_t *tmp;
+    if (piece == NULL || (long) arr[-1] <= piece->size.y)
+        return (NULL);
+    while (++beg < end) {
+        if (*beg != ' ' && *beg != '*' && *beg != '\0')
+            return (NULL);
     }
-    my_malloc(sizeof(void *) * (*nb_valid_pieces));
-    return (pieces);
+    tmp = spacefilled_malloc(piece->size.x * piece->size.y);
+    *piece->display = tmp;
+    for (uchar_t i = 0; i++ < piece->size.y;) {
+        fast_strncpy(tmp, arr[i], piece->size.x);
+        tmp += piece->size.x;
+    }
+    piece->display[1] = create_rotated_piece(*piece->display, &piece->size);
+    piece->display[2] = create_rotated_piece(piece->display[1],
+        &((vec_t) {piece->size.y, piece->size.x}));
+    piece->display[3] = create_rotated_piece(piece->display[2], &piece->size);
+    return (piece);
 }
 
-static piece_t *parser_tetrimino(int fd, piece_t *piece, char *line)
+static piece_t *parser_tetrimino(piece_t *piece, char *line)
 {
     char **tab;
 
     if (line == NULL)
         return (NULL);
     tab = line_to_arr(line, ' ');
-    if ((long) tab[-1] != 3)
+    if (tab == NULL || (long) tab[-1] != 3)
         return (NULL);
     piece->size.x = my_getnbr(tab[0]);
-    if (tab[1] && tab[2]) {
-        piece->size.y = my_getnbr(tab[1]);
-        piece->color = my_getnbr(tab[2]);
-    } else
-        return (NULL);
+    piece->size.y = my_getnbr(tab[1]);
+    piece->color = my_getnbr(tab[2]);
+    piece->dir = 0;
+    piece->pos.y = 0;
+    free(tab - 1);
     return (piece);
 }
 
@@ -58,16 +67,15 @@ void append_piece_from_file(char *filename, dict_t **loader)
     char *str = my_read(fd, &len);
     char **arr = line_to_arr(str, '\n');
 
-    if (piece == NULL || arr == NULL) {
-        append_to_dict(loader, filename, NULL);
-        return;
-    }
-    piece = parser_tetrimino(fd, piece, str);
-    if (piece == NULL) {
+    if (piece == NULL || arr == NULL || (long) arr[-1] < 2) {
         append_to_dict(loader, filename, NULL);
         return;
     }
     close(fd);
+    piece = parser_tetrimino(piece, str);
+    piece = builder_tetrimino(piece, arr, len);
+    free(str);
+    free(arr - 1);
     append_to_dict(loader, filename, piece);
 }
 

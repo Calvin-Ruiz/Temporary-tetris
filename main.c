@@ -13,24 +13,29 @@
 #include <option.h>
 #include <time.h>
 #include <debug.h>
+#include <loader.h>
 
 void my_event(game_t *game)
 {
     controls_t *cont = game->controls;
     chtype c = getch();
-
     if (c == cont->key_left)
         move_piece(game->actual, game->game_zone, &((vec_t) {-1, 0}));
     if (c == cont->key_right)
         move_piece(game->actual, game->game_zone, &((vec_t) {1, 0}));
     if (c == cont->key_drop)
-        my_puterr("Not implemented yet\n");
+        update_game(game);
     if (c == cont->key_turn)
         rotate_piece(game->actual, game->game_zone);
     if (c == cont->key_pause)
         my_puterr("Not implemented yet\n");
     if (c == cont->key_quit)
         game->is_running = 0;
+    if (c) {
+        draw_game_zone(game->game_zone, game->actual);
+        mvaddstr(5, 0, "  \b\b");
+        refresh();
+    }
 }
 
 void display_help(void)
@@ -80,9 +85,10 @@ void mainloop(game_t *game)
         game->game_zone->size.x >> 1);
     game->preview = clone_piece(game->pieces[clock() % game->nb_pieces],
         game->game_zone->size.x >> 1);
+    game->delta_time = CLOCKS_PER_SEC / game->data_box->level;
     while (game->is_running) {
         if (game->last < clock()) {
-            game->last += game->delta_time;
+            game->last = clock() + game->delta_time;
             update_game(game);
         }
         my_event(game);
@@ -107,7 +113,7 @@ void fixing(controls_t *controls)
 
 int main(int ac, char **av)
 {
-    controls_t controls = {KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, 'q', ' '};
+    controls_t controls = {'D', 'C', 'A', 'B', 'q', ' '};
     param_t params = {0, 0, 0};
     game_t *game = create_game(&controls);
     option_t *option = init_option_catcher(&controls, &params);
@@ -115,7 +121,8 @@ int main(int ac, char **av)
     my_init();
     catch_options_and_destroy(option, av + 1, game->data_box);
     fixing(&controls);
-    if (params.help);
+    if (params.help)
+        display_help();
     if (params.debug)
         my_debug(&controls, params.no_next, game->data_box->level,
             &game->game_zone->size);

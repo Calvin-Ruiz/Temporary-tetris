@@ -30,7 +30,7 @@ void init_game_zone(game_zone_t *zone)
     for (int i = -1; ++i < 8;) {
         zone->display[i] = my_malloc(sizeof(void *) * zone->size.y);
         for (int j = -1; ++j < zone->size.y;) {
-            zone->display[i][j] = malloc(zone->size.x * 2);
+            zone->display[i][j] = spacefilled_malloc(zone->size.x * 2);
         }
     }
     display_map(&zone->size);
@@ -38,11 +38,17 @@ void init_game_zone(game_zone_t *zone)
     diplsay_tetris();
 }
 
-void draw_game_zone(game_zone_t *self)
+void draw_game_zone(game_zone_t *self, void *actual)
 {
-    for (uchar_t i = 0; ++i < 8;)
-        sub_draw_game_zone(self, (char **) self->display[i]);
-    refresh();
+    attrset(COLOR_PAIR(0));
+    for (ushort_t y = -1; ++y < self->size.y;)
+        sub_draw_game_zone(self, (char *) self->display[0][y], y, 1);
+    display_piece(actual, self);
+    for (uchar_t i = 0; ++i < 8;) {
+        attrset(COLOR_PAIR(i));
+        for (ushort_t y = -1; ++y < self->size.y;)
+            sub_draw_game_zone(self, (char *) self->display[i][y], y, 0);
+    }
 }
 
 void remove_line(game_zone_t *self, ushort_t y)
@@ -55,7 +61,7 @@ uchar_t get_lines_filled(game_zone_t *self)
 {
     uchar_t nb_lines;
 
-    for (ushort_t y = 0; y < self->pos.y + self->size.y;) {
+    for (ushort_t y = -1; ++y < self->pos.y + self->size.y;) {
         if (is_line_full((*self->display)[y], self->size.x)) {
             remove_line(self, y);
             nb_lines++;

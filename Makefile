@@ -10,6 +10,7 @@ NAME = tetris
 FILES = debug.c \
 	game.c \
 	game_zone.c \
+	loader_2.c \
 	loader.c \
 	main.c \
 	map.c \

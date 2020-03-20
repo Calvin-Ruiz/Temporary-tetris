@@ -25,16 +25,28 @@ char rotate_piece(piece_t *self, game_zone_t *zone);
 void fix_piece(piece_t *self, game_zone_t *zone);
 void display_piece(piece_t *self, game_zone_t *zone);
 
+static inline uchar_t *spacefilled_malloc(size_t size)
+{
+    uchar_t *str = malloc(size);
+    uchar_t *tmp = str;
+
+    if (str == NULL)
+        exit(84);
+    while (size-- > 0)
+        *(tmp++) = ' ';
+    return (str);
+}
+
 static inline char my_check_pos(piece_t *self, game_zone_t *zone)
 {
     uchar_t *display = self->display[self->dir];
     char my_if = 0;
 
-    if (self->pos.x >= zone->size.x - self->size.x
-        || self->pos.y >= zone->size.y - self->size.y)
+    if (self->pos.x > zone->size.x - self->size.x
+        || self->pos.y > zone->size.y - self->size.y)
         return (1);
     for (ushort_t y = self->pos.y; y < self->pos.y + self->size.y; y++) {
-        for (ushort_t x = self->pos.x; x < self->pos.x + self->size.x; x += 2) {
+        for (ushort_t x = self->pos.x; x < self->pos.x + self->size.x; x++) {
             my_if = my_if || (*(display++) == '*'
                 && zone->display[0][y][x] == '*');
         }
@@ -42,6 +54,6 @@ static inline char my_check_pos(piece_t *self, game_zone_t *zone)
             return (1);
     }
     return (0);
-}
+}   
 
 #endif /* PIECE_H_ */
