@@ -11,6 +11,8 @@
 #include <piece.h>
 #include <data_box.h>
 
+#define SCORE_PER_LINE 100
+
 typedef struct game {
     game_zone_t *game_zone;
     data_box_t *data_box;
@@ -24,6 +26,7 @@ typedef struct game {
     clock_t last;
     uchar_t is_running;
     uchar_t display_next;
+    uchar_t is_paused;
 } game_t;
 
 void update_game(game_t *self);

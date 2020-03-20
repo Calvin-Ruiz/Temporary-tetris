@@ -49,6 +49,8 @@ void draw_game_zone(game_zone_t *self, void *actual)
         for (ushort_t y = -1; ++y < self->size.y;)
             sub_draw_game_zone(self, (char *) self->display[i][y], y, 0);
     }
+    mvaddstr(5, 0, "  \b\b");
+    refresh();
 }
 
 void remove_line(game_zone_t *self, ushort_t y)

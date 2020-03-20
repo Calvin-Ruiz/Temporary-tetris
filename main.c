@@ -19,23 +19,24 @@ void my_event(game_t *game)
 {
     controls_t *cont = game->controls;
     chtype c = getch();
+
     if (c == cont->key_left)
         move_piece(game->actual, game->game_zone, &((vec_t) {-1, 0}));
     if (c == cont->key_right)
         move_piece(game->actual, game->game_zone, &((vec_t) {1, 0}));
-    if (c == cont->key_drop)
+    if (c == cont->key_drop) {
         update_game(game);
+        game->data_box->score++;
+    }
     if (c == cont->key_turn)
         rotate_piece(game->actual, game->game_zone);
     if (c == cont->key_pause)
-        my_puterr("Not implemented yet\n");
+        game->is_paused = !game->is_paused;
     if (c == cont->key_quit)
         game->is_running = 0;
-    if (c) {
+    draw_datas(game->data_box);
+    if (c)
         draw_game_zone(game->game_zone, game->actual);
-        mvaddstr(5, 0, "  \b\b");
-        refresh();
-    }
 }
 
 void display_help(void)
@@ -53,8 +54,8 @@ void display_help(void)
         endwin();
         exit(84);
     }
-    write(1, str, len);
     endwin();
+    write(1, str, len);
     exit(0);
 }
 
@@ -87,7 +88,7 @@ void mainloop(game_t *game)
         game->game_zone->size.x >> 1);
     game->delta_time = CLOCKS_PER_SEC / game->data_box->level;
     while (game->is_running) {
-        if (game->last < clock()) {
+        if (!game->is_paused && game->last < clock()) {
             game->last = clock() + game->delta_time;
             update_game(game);
         }
