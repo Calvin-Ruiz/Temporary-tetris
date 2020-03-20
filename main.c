@@ -118,9 +118,9 @@ int main(int ac, char **av)
     param_t params = {0, 0, 0};
     game_t *game = create_game(&controls);
     option_t *option = init_option_catcher(&controls, &params);
-
     my_init();
-    catch_options_and_destroy(option, av + 1, game->data_box);
+    catch_options_and_destroy(option, av + 1, game->data_box,
+        &game->game_zone->size);
     fixing(&controls);
     if (params.help)
         display_help();

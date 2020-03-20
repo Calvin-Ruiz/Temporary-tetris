@@ -83,7 +83,8 @@ static char apply_option(option_t *option, char **av)
     return (apply_word_option(option, av));
 }
 
-void catch_options_and_destroy(option_t *option, char **av, data_box_t *datas)
+void catch_options_and_destroy(option_t *option, char **av, data_box_t *datas,
+    vec_t *size)
 {
     int nb = 0;
 
@@ -96,6 +97,8 @@ void catch_options_and_destroy(option_t *option, char **av, data_box_t *datas)
             datas->nb_lines = nb * 10 - 10;
         }
     }
+    if (option->size)
+        apply_new_size(option->size, size);
     destroy_dict(option->single, NULL);
     destroy_dict(option->basics, NULL);
     destroy_dict(option->bools, NULL);
