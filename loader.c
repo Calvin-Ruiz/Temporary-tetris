@@ -22,6 +22,12 @@ piece_t **build_piece_array(loader_t *loader, uchar_t *nb_valid_pieces)
     piece_t **pieces = my_malloc(0);
 
     *nb_valid_pieces = 0;
+    while (loader) {
+        if (loader->piece) {
+            pieces[(*nb_valid_pieces)++] = loader->piece;
+        }
+        loader = loader->next;
+    }
     my_malloc(sizeof(void *) * (*nb_valid_pieces));
     return (pieces);
 }
@@ -47,18 +53,17 @@ static piece_t *parser_tetrimino(int fd, piece_t *piece, char *line)
 void append_piece_from_file(char *filename, dict_t **loader)
 {
     piece_t *piece = malloc(sizeof(piece_t));
-    int fd = open(filename, O_RDONLY);
+    int fd = open(tmpcat("tetriminos/", filename), O_RDONLY);
     long len = 0;
     char *str = my_read(fd, &len);
-    char **arr;
+    char **arr = line_to_arr(str, '\n');
 
-    if (piece == NULL || str == NULL) {
+    if (piece == NULL || arr == NULL) {
         append_to_dict(loader, filename, NULL);
         return;
     }
-    arr = line_to_arr(str, '\n');
     piece = parser_tetrimino(fd, piece, str);
-    if (piece == NULL || arr == NULL) {
+    if (piece == NULL) {
         append_to_dict(loader, filename, NULL);
         return;
     }

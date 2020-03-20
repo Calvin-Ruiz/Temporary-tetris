@@ -14,7 +14,7 @@ piece_t *clone_piece(piece_t *piece, const ushort_t x)
 
     if (new) {
         *new = *piece;
-        new->pos.x = x;
+        new->pos.x = x - (piece->size.x >> 1);
     }
     return (new);
 }

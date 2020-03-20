@@ -76,8 +76,10 @@ static void my_init(void)
 
 void mainloop(game_t *game)
 {
-    refresh();
-    read(0, 0, 1);
+    game->actual = clone_piece(game->pieces[clock() % game->nb_pieces],
+        game->game_zone->size.x >> 1);
+    game->preview = clone_piece(game->pieces[clock() % game->nb_pieces],
+        game->game_zone->size.x >> 1);
     while (game->is_running) {
         if (game->last < clock()) {
             game->last += game->delta_time;
@@ -117,7 +119,7 @@ int main(int ac, char **av)
     if (params.debug)
         my_debug(&controls, params.no_next, game->data_box->level,
             &game->game_zone->size);
-    //load_piece_array(params.debug, &game->nb_pieces);
+    game->pieces = load_piece_array(params.debug, &game->nb_pieces);
     if (params.debug)
         read(0, *av, 1);
     init_game_zone(game->game_zone);
