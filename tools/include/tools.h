@@ -11,6 +11,7 @@
 void *my_malloc(size_t size);
 char **line_to_arr(char *str, const char sep);
 void my_putnbr(int nb);
+void my_putpoint(char *str);
 char *tmpcat(char *str1, char *str2);
 
 static inline void my_putchar(char c)

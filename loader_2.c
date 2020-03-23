@@ -11,6 +11,45 @@
 #include <fcntl.h>
 #include <my_getnbr.h>
 #include <my_read.h>
+#include <tools.h>
+
+void my_prompt_debug(loader_t *my_list)
+{
+    while (my_list != NULL) {
+        write(1, "Tetriminos : ",13);
+        my_putpoint(my_list->name);
+        if (my_list->piece == NULL) {
+            write(1, ": ",2);
+            write(1, " Error\n\r",8);
+            my_list = my_list->next;
+            continue;
+        }
+        write(1, " : Size ",8);
+        my_putnbr(my_list->piece->size.x);
+        write(1, "*",1);
+        my_putnbr(my_list->piece->size.y);
+        write(1, " :  Color ",10);
+        my_putnbr(my_list->piece->color);
+        write(1, " :\n\r",4);
+        my_list = my_list->next;
+    }
+
+}
+
+void my_sort_list(loader_t **my_list)
+{
+    loader_t *tmp = (*my_list)->next;
+
+    while (tmp) {
+        if (my_strcmp((*my_list)->name, tmp->name) > 0) {
+            (*my_list)->next = tmp->next;
+            tmp->next = *my_list;
+            *my_list = tmp;
+        }
+        my_list = &((*my_list)->next);
+        tmp = (*my_list)->next;
+    }
+}
 
 piece_t **build_piece_array(loader_t *loader, uchar_t *nb_valid_pieces)
 {

@@ -4,6 +4,7 @@
 ** File description:
 ** my_read.c
 */
+
 #include <my_read.h>
 
 static strchain_t *my_reader(const int port, long *full, char *buff, int size)
