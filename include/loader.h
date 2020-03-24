@@ -21,6 +21,15 @@ static inline void fast_strncpy(uchar_t *dest, char *src, short n)
     while (n-- > 0 && *src)
         *(dest++) = *(src++);
 }
+
+static inline void my_putstr_del(char *str)
+{
+    short i = -1;
+
+    while (str[++i] != '.' && str[i] != '\0');
+    write(1, str, i);
+}
+
 void my_sort_list(loader_t **my_list);
 void my_prompt_debug(loader_t *my_list);
 uchar_t *create_rotated_piece(uchar_t *piece_array, vec_t *size);

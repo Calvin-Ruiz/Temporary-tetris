@@ -23,7 +23,7 @@ FILES = debug.c \
 
 FLAGS = -lncurses -I include -I tools/include
 
-all :	$(NAME)
+all:	$(NAME)
 
 $(NAME):
 	gcc -o $(NAME) $(FILES) $(FLAGS)
@@ -32,7 +32,7 @@ fast:
 	gcc -Ofast -o $(NAME) $(FILES) $(FLAGS)
 
 clean:
-	rm -f *.o ./*/*.o ./*/*/*.o ./*/*/*/*.o
+	rm -f *.o
 	rm -f *# *~ ./*/*# ./*/*~ ./*/*/*# ./*/*/*~ vgcore*
 
 fclean:	clean
@@ -52,7 +52,7 @@ push:	prepush
 	git push origin master
 
 pull:
-	git fetch origin master && git pull origin master
+	git pull origin master
 
 sync:	pull	push
 

@@ -48,15 +48,6 @@ void my_putnbr(int nb)
     my_putchar('0' + nb % 10);
 }
 
-void my_putpoint(char *str)
-{
-    int i = 0;
-    while (str[i] != '.') {
-        my_putchar(i);
-        i++;
-    }
-}
-
 char *tmpcat(char *str1, char *str2)
 {
     static char tmp[1024];

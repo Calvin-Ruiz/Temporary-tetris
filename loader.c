@@ -15,7 +15,15 @@
 void debug_display(loader_t *loader)
 {
     my_sort_list(&loader);
-    my_prompt_debug(loader);
+    while (loader != NULL) {
+        write(1, "Tetriminos : ",13);
+        my_putstr_del(loader->name);
+        if (loader->piece)
+            my_prompt_piece_datas(loader->piece);
+        else
+            write(1, ":  Error\n\r", 10);
+        my_list = my_list->next;
+    }
 }
 
 static piece_t *builder_tetrimino(piece_t *piece, char **arr, long len)
@@ -88,8 +96,10 @@ piece_t **load_piece_array(char is_debug, uchar_t *nb_valid_pieces)
     piece_t **pieces;
 
     while (my_dirent) {
-        if (*my_dirent->d_name == '.')
+        if (*my_dirent->d_name == '.') {
+            my_dirent = readdir(dir);
             continue;
+        }
         append_piece_from_file(my_dirent->d_name, &loader);
         my_dirent = readdir(dir);
     }
