@@ -19,24 +19,47 @@ void my_prompt_piece_datas(piece_t *piece)
     my_putnbr(piece->size.x);
     write(1, "*", 1);
     my_putnbr(piece->size.y);
-    write(1, " :  Color ",10);
+    write(1, " :  Color ", 10);
     my_putnbr(piece->color);
-    write(1, " :\n\r",4);
+    write(1, " :\n\r", 4);
+}
+
+void my_list_up(loader_t **ptmp, loader_t **ptmp_old)
+{
+    loader_t *tmp_next;
+    loader_t *tmp;
+    loader_t *tmp_old;
+
+    tmp = *ptmp;
+    tmp_old = *ptmp_old;
+    tmp_next = tmp->next;
+    if (my_strcmp(tmp->name, tmp_next->name) > 0) {
+        tmp->next = tmp_next->next;
+        tmp_old->next = tmp_next;
+        tmp_next->next = tmp;
+    }
+    *ptmp_old = tmp_old->next;
+    *ptmp = tmp_old->next->next;
 }
 
 void my_sort_list(loader_t **my_list)
 {
-    loader_t *tmp = (*my_list)->next;
+    loader_t *tmp;
+    loader_t *tmp_old;
+    loader_t *linker;
+    int len;
 
-    while (tmp) {
-        if (my_strcmp((*my_list)->name, tmp->name) > 0) {
-            (*my_list)->next = tmp->next;
-            tmp->next = *my_list;
-            *my_list = tmp;
-        }
-        my_list = &((*my_list)->next);
-        tmp = (*my_list)->next;
+    len = my_list_size(*my_list);
+    linker = malloc(sizeof(*my_list));
+    linker->name = "";
+    linker->next = *my_list;
+    while (--len > 0) {
+        tmp = linker->next;
+        tmp_old = linker;
+        while (tmp->next != NULL)
+            my_list_up(&tmp, &tmp_old);
     }
+    *my_list = linker->next;
 }
 
 piece_t **build_piece_array(loader_t *loader, uchar_t *nb_valid_pieces)

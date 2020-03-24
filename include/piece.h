@@ -54,6 +54,6 @@ static inline char my_check_pos(piece_t *self, game_zone_t *zone)
             return (1);
     }
     return (0);
-}   
+}
 
 #endif /* PIECE_H_ */

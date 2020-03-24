@@ -10,7 +10,6 @@
 #include "piece.h"
 #include "loader.h"
 
-
 int my_list_size(loader_t const *begin)
 {
     int i = 0;
