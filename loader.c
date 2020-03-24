@@ -15,14 +15,17 @@
 void debug_display(loader_t *loader)
 {
     my_sort_list(&loader);
+    int i = my_list_size(loader);
+    my_putnbr(i);
+    write(1, "\n\r",2);
     while (loader != NULL) {
         write(1, "Tetriminos : ",13);
         my_putstr_del(loader->name);
         if (loader->piece)
             my_prompt_piece_datas(loader->piece);
         else
-            write(1, ":  Error\n\r", 10);
-        my_list = my_list->next;
+            write(1, " : Error\n\r", 10);
+        loader = loader->next;
     }
 }
 
