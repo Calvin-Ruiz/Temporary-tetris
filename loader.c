@@ -20,6 +20,7 @@ void debug_display(loader_t *loader)
     write(1, "\n\r", 2);
     while (loader != NULL) {
         write(1, "Tetriminos : ", 13);
+        write(1, "Name ", 5);
         my_putstr_del(loader->name);
         if (loader->piece)
             my_prompt_piece_datas(loader->piece);
@@ -27,6 +28,7 @@ void debug_display(loader_t *loader)
             write(1, " : Error\n\r", 10);
         loader = loader->next;
     }
+    write(1, "Press any key to start Tetris", 29);
 }
 
 static piece_t *builder_tetrimino(piece_t *piece, char **arr, long len)

@@ -22,6 +22,14 @@ void my_prompt_piece_datas(piece_t *piece)
     write(1, " :  Color ", 10);
     my_putnbr(piece->color);
     write(1, " :\n\r", 4);
+    char *display = piece->display[0];
+    short y = -1;
+
+    while (++y < piece->size.y) {
+        write(1, display, piece->size.x);
+        write(1, "\n\r", 2);
+        display += piece->size.x;
+    }
 }
 
 void my_list_up(loader_t **ptmp, loader_t **ptmp_old)
