@@ -31,5 +31,6 @@ typedef struct game {
 
 void update_game(game_t *self);
 game_t *create_game(controls_t *controls);
+void init_game(game_t *self);
 
 #endif /* GAME_H_ */

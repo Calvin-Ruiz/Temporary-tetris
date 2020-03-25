@@ -30,7 +30,7 @@ static inline void my_putstr_del(char *str)
     write(1, str, i);
 }
 
-void my_sort_list(loader_t **my_list);
+void my_sort_list(loader_t **my_list, int len);
 void my_prompt_debug(loader_t *my_list);
 void my_prompt_piece_datas(piece_t *piece);
 uchar_t *create_rotated_piece(uchar_t *piece_array, vec_t *size);

@@ -10,24 +10,24 @@
 void my_debug(controls_t *controls, uchar_t no_next, uchar_t level,
     vec_t *size)
 {
-    my_putstr("*** DEBUG MODE ***\n\rKey Left :  ");
+    my_putstr("*** DEBUG MODE ***\nKey Left :  ");
     key_printer(controls->key_left);
-    my_putstr("\n\rKey Right :  ");
+    my_putstr("\nKey Right :  ");
     key_printer(controls->key_right);
-    my_putstr("\n\rKey Turn :  ");
+    my_putstr("\nKey Turn :  ");
     key_printer(controls->key_turn);
-    my_putstr("\n\rKey Drop :  ");
+    my_putstr("\nKey Drop :  ");
     key_printer(controls->key_drop);
-    my_putstr("\n\rKey Quit :  ");
+    my_putstr("\nKey Quit :  ");
     key_printer(controls->key_quit);
-    my_putstr("\n\rKey Pause :  ");
+    my_putstr("\nKey Pause :  ");
     key_printer(controls->key_pause);
-    my_putstr("\n\rNext :  ");
-    my_putstr(no_next ? "No\n\rLevel :  " : "Yes\n\rLevel :  ");
+    my_putstr("\nNext :  ");
+    my_putstr(no_next ? "No\nLevel :  " : "Yes\nLevel :  ");
     my_putnbr(level);
-    my_putstr("\n\rSize :  ");
+    my_putstr("\nSize :  ");
     my_putnbr(size->y);
     my_putchar('*');
     my_putnbr(size->x);
-    my_putstr("\n\rTetriminos :  ");
+    my_putstr("\nTetriminos :  ");
 }

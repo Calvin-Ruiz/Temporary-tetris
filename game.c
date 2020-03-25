@@ -25,6 +25,16 @@ game_t *create_game(controls_t *controls)
     return (&new);
 }
 
+void init_game(game_t *self)
+{
+    init_game_zone(self->game_zone);
+}
+
+static void display_next(game_t *self)
+{
+    vec_t pos = self->preview_pos;
+}
+
 void update_game(game_t *self)
 {
     static vec_t movement = {0, 1};
@@ -36,6 +46,8 @@ void update_game(game_t *self)
         self->is_running = !my_check_pos(self->actual, self->game_zone);
         self->preview = clone_piece(self->pieces[clock() % self->nb_pieces],
             self->game_zone->size.x >> 1);
+        if (self->display_next)
+            display_next(self);
         filled = get_lines_filled(self->game_zone);
         self->data_box->nb_lines += filled;
         self->data_box->score += filled * SCORE_PER_LINE;

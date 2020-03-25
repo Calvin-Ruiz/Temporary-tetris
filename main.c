@@ -99,7 +99,6 @@ int main(int ac, char **av)
     param_t params = {0, 0, 0};
     game_t *game = create_game(&controls);
     option_t *option = init_option_catcher(&controls, &params);
-    my_init();
     catch_options_and_destroy(option, av + 1, game->data_box,
         &game->game_zone->size);
     fixing(&controls);
@@ -109,9 +108,10 @@ int main(int ac, char **av)
         my_debug(&controls, params.no_next, game->data_box->level,
             &game->game_zone->size);
     game->pieces = load_piece_array(params.debug, &game->nb_pieces);
+    my_init();
     if (params.debug)
         read(0, *av, 1);
-    init_game_zone(game->game_zone);
+    init_game(game);
     mainloop(game);
     endwin();
     return (0);

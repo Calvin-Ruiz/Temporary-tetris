@@ -15,7 +15,7 @@
 
 void my_prompt_piece_datas(piece_t *piece)
 {
-    char *display = piece->display[0];
+    char *display = (char *) piece->display[0];
     short y = -1;
 
     write(1, " : Size ", 8);
@@ -24,10 +24,10 @@ void my_prompt_piece_datas(piece_t *piece)
     my_putnbr(piece->size.y);
     write(1, " :  Color ", 10);
     my_putnbr(piece->color);
-    write(1, " :\n\r", 4);
+    write(1, " :\n", 3);
     while (++y < piece->size.y) {
         write(1, display, piece->size.x);
-        write(1, "\n\r", 2);
+        write(1, "\n", 1);
         display += piece->size.x;
     }
 }
@@ -50,15 +50,13 @@ void my_list_up(loader_t **ptmp, loader_t **ptmp_old)
     *ptmp = tmp_old->next->next;
 }
 
-void my_sort_list(loader_t **my_list)
+void my_sort_list(loader_t **my_list, int len)
 {
     loader_t *tmp;
     loader_t *tmp_old;
     loader_t *linker;
-    int len;
 
-    len = my_list_size(*my_list);
-    linker = malloc(sizeof(*my_list));
+    linker = my_malloc(sizeof(**my_list));
     linker->name = "";
     linker->next = *my_list;
     while (--len > 0) {

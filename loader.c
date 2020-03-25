@@ -16,9 +16,9 @@ void debug_display(loader_t *loader)
 {
     int i = my_list_size(loader);
 
-    my_sort_list(&loader);
+    my_sort_list(&loader, i);
     my_putnbr(i);
-    write(1, "\n\r", 2);
+    write(1, "\n", 1);
     while (loader != NULL) {
         write(1, "Tetriminos : ", 13);
         write(1, "Name ", 5);
@@ -26,7 +26,7 @@ void debug_display(loader_t *loader)
         if (loader->piece)
             my_prompt_piece_datas(loader->piece);
         else
-            write(1, " : Error\n\r", 10);
+            write(1, " : Error\n", 9);
         loader = loader->next;
     }
     write(1, "Press any key to start Tetris", 29);
