@@ -25,14 +25,43 @@ game_t *create_game(controls_t *controls)
     return (&new);
 }
 
-void init_game(game_t *self)
+void init_game(game_t *self, char display_next)
 {
     init_game_zone(self->game_zone);
+    self->preview_pos.x = 0;
+    self->preview_pos.y = 19;
+    self->display_next = display_next;
 }
 
-static void display_next(game_t *self)
+void display_next(game_t *self)
 {
     vec_t pos = self->preview_pos;
+    ushort_t i = -1;
+    uchar_t *display = self->preview->display[0];
+
+    attrset(COLOR_PAIR(0));
+    while (self->actual->size.y + 2 > ++i)
+        mvaddstr(pos.y + i, pos.x, "                                 ");
+    mvaddch(pos.y, pos.x, '/');
+    i = -1;
+    while (++i <= self->preview->size.x * 2)
+        addch('-');
+    addch('\\');
+    mvaddstr(pos.y, pos.x + 1, (self->preview->size.x < 2) ? "nxt" : "-next");
+    while (pos.y++ < self->preview->size.y + self->preview_pos.y) {
+        mvaddch(pos.y, pos.x, '|');
+        mvaddch(pos.y, pos.x + self->preview->size.x * 2 + 2, '|');
+    }
+    mvaddch(pos.y, pos.x, '\\');
+    i = -1;
+    while (++i <= self->preview->size.x * 2)
+        addch('-');
+    addch('/');
+    attrset(COLOR_PAIR(self->preview->color));
+    for (ushort_t y = 0; y++ < self->preview->size.y;) {
+        for (ushort_t x = 0; x < self->preview->size.x; x++)
+            mvaddch(y + self->preview_pos.y, x * 2 + pos.x + 2, *(display++));
+    }
 }
 
 void update_game(game_t *self)

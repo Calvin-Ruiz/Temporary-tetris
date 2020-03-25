@@ -66,6 +66,8 @@ void mainloop(game_t *game)
         game->game_zone->size.x >> 1);
     game->delta_time = CLOCKS_PER_SEC / game->data_box->level;
     import_score(game->data_box);
+    if (game->display_next)
+        display_next(game);
     while (game->is_running) {
         if (!game->is_paused && game->last < clock()) {
             game->last = clock() + game->delta_time;
@@ -111,7 +113,7 @@ int main(int ac, char **av)
     my_init();
     if (params.debug)
         read(0, *av, 1);
-    init_game(game);
+    init_game(game, !params.no_next);
     mainloop(game);
     endwin();
     return (0);
