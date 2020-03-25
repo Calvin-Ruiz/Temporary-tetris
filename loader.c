@@ -91,6 +91,7 @@ void append_piece_from_file(char *filename, dict_t **loader)
     free(str);
     free(arr - 1);
     append_to_dict(loader, filename, piece);
+    free(piece);
 }
 
 piece_t **load_piece_array(char is_debug, uchar_t *nb_valid_pieces)
