@@ -11,8 +11,9 @@
 game_t *create_game(controls_t *controls)
 {
     static game_t new;
+    static data_box_t data = {(vec_t) {23, 10}, 0, 0, 0, 1, 0};
 
-    new.data_box = create_data_box();
+    new.data_box = &data;
     new.game_zone = create_game_zone();
     new.controls = controls;
     new.preview = NULL;
@@ -20,6 +21,7 @@ game_t *create_game(controls_t *controls)
     new.is_running = 1;
     new.is_paused = 0;
     new.display_next = 1;
+    new.last = 0;
     return (&new);
 }
 

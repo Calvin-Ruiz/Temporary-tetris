@@ -59,20 +59,20 @@ char *my_read(const int port, long int *full_size)
     int size;
     strchain_t *chain;
     char *buffer;
-
-    if (buff == NULL)
-        return (NULL);
+        if (buff == NULL)
+    return (NULL);
     size = read(port, buff, DATALEN);
     if (size == -1)
-        return (NULL);
+    return (NULL);
     *full_size = size;
     chain = my_reader(port, full_size, buff, size);
     if (chain == NULL)
-        return (NULL);
-    buffer = malloc(*full_size + 1);
+    return (NULL);
+    buffer = malloc(*full_size + 2);
     if (buffer == NULL)
-        return (NULL);
+    return (NULL);
     my_extractor(chain, buffer, *full_size);
     buffer[*full_size] = '\n';
+    buffer[*full_size + 1] = '\0';
     return (buffer);
 }

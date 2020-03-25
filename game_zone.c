@@ -61,7 +61,7 @@ void remove_line(game_zone_t *self, ushort_t y)
 
 uchar_t get_lines_filled(game_zone_t *self)
 {
-    uchar_t nb_lines;
+    uchar_t nb_lines = 0;
 
     for (ushort_t y = -1; ++y < self->size.y;) {
         if (is_line_full((*self->display)[y], self->size.x)) {
