@@ -36,6 +36,7 @@ static piece_t *builder_tetrimino(piece_t *piece, char **arr, long len)
     char *end = arr[0] + len;
     char *beg = arr[1] - 1;
     uchar_t *tmp;
+
     if (piece == NULL || (long) arr[-1] <= piece->size.y)
         return (NULL);
     while (++beg < end) {
@@ -50,7 +51,7 @@ static piece_t *builder_tetrimino(piece_t *piece, char **arr, long len)
     }
     piece->display[1] = create_rotated_piece(*piece->display, &piece->size);
     piece->display[2] = create_rotated_piece(piece->display[1],
-                                             &((vec_t) {piece->size.y, piece->size.x}));
+        &((vec_t) {piece->size.y, piece->size.x}));
     piece->display[3] = create_rotated_piece(piece->display[2], &piece->size);
     return (piece);
 }
