@@ -44,16 +44,11 @@ void display_help(void)
     char *str;
     long int len = 0;
 
-    if (fd == -1) {
-        endwin();
+    if (fd == -1)
         exit(84);
-    }
     str = my_read(fd, &len);
-    if (str == NULL) {
-        endwin();
+    if (str == NULL)
         exit(84);
-    }
-    endwin();
     write(1, str, len);
     exit(0);
 }

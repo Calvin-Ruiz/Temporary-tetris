@@ -52,14 +52,11 @@ static char apply_word_option(option_t *option, char **av)
             continue;
         (*av)[i] = '\0';
         word = get_from_dict(option->basics, *av);
-        if (word == NULL) {
-            endwin();
+        if (word == NULL)
             exit(84);
-        }
         *word = *av + i + 1;
         return (1);
     }
-    endwin();
     exit(84);
 }
 
@@ -73,10 +70,8 @@ static char apply_option(option_t *option, char **av)
         return (1);
     }
     if (word) {
-        if (av[1] == NULL) {
-            endwin();
+        if (av[1] == NULL)
             exit(84);
-        }
         *word = av[1];
         return (2);
     }
