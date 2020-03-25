@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <curses.h>
 #include <tools.h>
+#include <time.h>
 
 typedef unsigned char uchar_t;
 typedef unsigned short ushort_t;

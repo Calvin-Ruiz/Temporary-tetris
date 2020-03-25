@@ -6,7 +6,6 @@
 */
 
 #include <game.h>
-#include <time.h>
 #include <map.h>
 
 game_t *create_game(controls_t *controls)

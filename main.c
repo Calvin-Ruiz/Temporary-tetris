@@ -11,7 +11,6 @@
 #include <my_read.h>
 #include <dict.h>
 #include <option.h>
-#include <time.h>
 #include <debug.h>
 #include <loader.h>
 
@@ -20,15 +19,15 @@ void my_event(game_t *game)
     controls_t *cont = game->controls;
     chtype c = getch();
 
-    if (c == cont->key_left)
+    if (c == cont->key_left && !game->is_paused)
         move_piece(game->actual, game->game_zone, &((vec_t) {-1, 0}));
-    if (c == cont->key_right)
+    if (c == cont->key_right && !game->is_paused)
         move_piece(game->actual, game->game_zone, &((vec_t) {1, 0}));
-    if (c == cont->key_drop) {
+    if (c == cont->key_drop && !game->is_paused) {
         update_game(game);
         game->data_box->score++;
     }
-    if (c == cont->key_turn)
+    if (c == cont->key_turn && !game->is_paused)
         rotate_piece(game->actual, game->game_zone);
     if (c == cont->key_pause)
         game->is_paused = !game->is_paused;
@@ -87,13 +86,16 @@ void mainloop(game_t *game)
     game->preview = clone_piece(game->pieces[clock() % game->nb_pieces],
         game->game_zone->size.x >> 1);
     game->delta_time = CLOCKS_PER_SEC / game->data_box->level;
+    import_score(game->data_box);
     while (game->is_running) {
         if (!game->is_paused && game->last < clock()) {
             game->last = clock() + game->delta_time;
+            game->data_box->time += game->delta_time;
             update_game(game);
         }
         my_event(game);
     }
+    export_score(game->data_box);
 }
 
 void fixing(controls_t *controls)

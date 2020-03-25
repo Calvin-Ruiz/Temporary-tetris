@@ -8,7 +8,6 @@
 #ifndef OPTION_H_
 #define OPTION_H_
 
-#include <time.h>
 #include <curses.h>
 #include <main.h>
 #include <data_box.h>
