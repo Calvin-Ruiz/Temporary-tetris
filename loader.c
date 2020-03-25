@@ -14,8 +14,9 @@
 
 void debug_display(loader_t *loader)
 {
-    my_sort_list(&loader);
     int i = my_list_size(loader);
+
+    my_sort_list(&loader);
     my_putnbr(i);
     write(1, "\n\r", 2);
     while (loader != NULL) {
@@ -36,7 +37,6 @@ static piece_t *builder_tetrimino(piece_t *piece, char **arr, long len)
     char *end = arr[0] + len;
     char *beg = arr[1] - 1;
     uchar_t *tmp;
-
     if (piece == NULL || (long) arr[-1] <= piece->size.y)
         return (NULL);
     while (++beg < end) {

@@ -15,6 +15,9 @@
 
 void my_prompt_piece_datas(piece_t *piece)
 {
+    char *display = piece->display[0];
+    short y = -1;
+
     write(1, " : Size ", 8);
     my_putnbr(piece->size.x);
     write(1, "*", 1);
@@ -22,9 +25,6 @@ void my_prompt_piece_datas(piece_t *piece)
     write(1, " :  Color ", 10);
     my_putnbr(piece->color);
     write(1, " :\n\r", 4);
-    char *display = piece->display[0];
-    short y = -1;
-
     while (++y < piece->size.y) {
         write(1, display, piece->size.x);
         write(1, "\n\r", 2);
