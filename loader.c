@@ -63,8 +63,12 @@ static piece_t *parser_tetrimino(piece_t *piece, char *line)
     if (line == NULL)
         return (NULL);
     tab = line_to_arr(line, ' ');
-    if (tab == NULL || (long) tab[-1] != 3)
+    if (tab == NULL || tab == (char **) 8 || (long) tab[-1] != 3) {
+        if ((unsigned long) tab > 8)
+            free(tab - 1);
+        free(piece);
         return (NULL);
+    }
     piece->size.x = my_getnbr(tab[0]);
     piece->size.y = my_getnbr(tab[1]);
     piece->color = my_getnbr(tab[2]);
