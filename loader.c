@@ -50,7 +50,7 @@ static piece_t *builder_tetrimino(piece_t *piece, char **arr, long len)
     }
     piece->display[1] = create_rotated_piece(*piece->display, &piece->size);
     piece->display[2] = create_rotated_piece(piece->display[1],
-        &((vec_t) {piece->size.y, piece->size.x}));
+                                             &((vec_t) {piece->size.y, piece->size.x}));
     piece->display[3] = create_rotated_piece(piece->display[2], &piece->size);
     return (piece);
 }
@@ -82,6 +82,10 @@ void append_piece_from_file(char *filename, dict_t **loader)
     char **arr = line_to_arr(str, '\n');
 
     if (piece == NULL || arr == NULL || (long) arr[-1] < 2) {
+        if (piece)
+            free(piece);
+        if (arr)
+            free(arr);
         append_to_dict(loader, filename, NULL);
         return;
     }
@@ -91,7 +95,6 @@ void append_piece_from_file(char *filename, dict_t **loader)
     free(str);
     free(arr - 1);
     append_to_dict(loader, filename, piece);
-    free(piece);
 }
 
 piece_t **load_piece_array(char is_debug, uchar_t *nb_valid_pieces)
